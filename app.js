@@ -1,6 +1,6 @@
 const express = require('express');
+const app = express()
 const expressLayouts = require('express-ejs-layouts')
-
 require('dotenv').config()
 
 // Mongo
@@ -23,10 +23,14 @@ connection.once('open', () => {
     console.log("MongoDB atlas connected");
 })
 
-// route
-const routeIndex = require('./routes/index')
+// Bodyparser
+app.use(express.urlencoded({ extended: false }));
+// app.use(express.json());
 
-const app = express()
+
+
+// Routes
+const routeIndex = require('./routes/index')
 
 // app.use('/public',
 //   express.static(
