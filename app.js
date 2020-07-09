@@ -27,7 +27,21 @@ connection.once('open', () => {
 app.use(express.urlencoded({ extended: false }));
 // app.use(express.json());
 
+app.use(session({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true
+}))
 
+// Connect flash
+app.use(flash());
+
+// Global Vars
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  next();
+});
 
 // Routes
 const routeIndex = require('./routes/index')
