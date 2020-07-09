@@ -2,6 +2,8 @@ const express = require('express');
 const app = express()
 const expressLayouts = require('express-ejs-layouts')
 require('dotenv').config()
+const flash = require('connect-flash');
+const session = require('express-session');
 
 // Mongo
 const mongoose = require("mongoose");
@@ -27,10 +29,18 @@ connection.once('open', () => {
 app.use(express.urlencoded({ extended: false }));
 // app.use(express.json());
 
+// Express Session
+// app.use(session({  // Brad's
+//   secret: 'secret',
+//   resave: true,
+//   saveUninitialized: true,
+// }))
+app.set('trust proxy', 1) // trust first proxy
 app.use(session({
-  secret: 'secret',
-  resave: true,
-  saveUninitialized: true
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
 }))
 
 // Connect flash
